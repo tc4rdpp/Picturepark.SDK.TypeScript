@@ -2,12 +2,12 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@ang
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 
 // LIBRARIES
 import {
   AggregationResult, Channel, FilterBase, Content, AggregatorBase, ContentService, ContentAggregationRequest,
-  LifeCycleFilter, ContentSearchType, BrokenDependenciesFilter
+  LifeCycleFilter, ContentSearchType, BrokenDependenciesFilter, ContentSearchRequest, SearchBehavior, SortInfo, SortDirection, ContentSearchResult, IContentSearchRequest
 } from '@picturepark/sdk-v1-angular';
 import { ContentItemSelectionService, BasketService, ContentModel, ContentBrowserComponent } from '@picturepark/sdk-v1-angular-ui';
 
@@ -127,9 +127,87 @@ export class ContentPickerComponent implements OnInit, OnDestroy {
     }));
   }
 
+
+
+
   ngOnDestroy() {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }
+}
+
+
+
+
+export class SearchHandler {
+
+  private searchResponseSubscription: Observable<ContentSearchResult>;
+
+  private searchRequestParameters: IContentSearchRequest;
+  private aggregateRequestParameters: IContentSearchRequest;
+
+
+  constructor() {
+  }
+
+
+  public search = () => {
+
+
+    const request = new ContentSearchRequest({
+      debugMode: false,
+      pageToken: this.searchRequestParameters.pageToken,
+      brokenDependenciesFilter: BrokenDependenciesFilter.All,
+      filter: this.searchRequestParameters.filter ? this.searchRequestParameters.filter : undefined,
+      channelId: this.searchRequestParameters.channelId,
+      lifeCycleFilter: LifeCycleFilter.ActiveOnly,
+      limit: this.searchRequestParameters.limit,
+      searchString: this.searchRequestParameters.searchString,
+      searchType: ContentSearchType.MetadataAndFullText,
+      aggregators: this.aggregateRequestParameters.aggregators,
+      aggregationFilters: this.aggregateRequestParameters.aggregationFilters, 
+      searchBehaviors: [
+        SearchBehavior.SimplifiedSearch,
+        SearchBehavior.DropInvalidCharactersOnFailure,
+        SearchBehavior.WildcardOnSingleTerm
+      ],
+      sort: this.searchRequestParameters.activeSortingType.field === 'relevance' ? [] : [
+        new SortInfo({
+          field: this.searchRequestParameters.activeSortingType.field,
+          direction: this.searchRequestParameters.isAscending ? SortDirection.Asc : SortDirection.Desc
+        })
+      ]
+    });
+
+    
+
+    // const request = new ContentSearchRequest({
+    //   debugMode: false,
+    //   // pageToken: this.nextPageToken,
+    //   brokenDependenciesFilter: BrokenDependenciesFilter.All,
+    //   filter: this.selectedFilter || undefined,
+    //   channelId: this.selectedChannel.id,
+    //   lifeCycleFilter: LifeCycleFilter.ActiveOnly,
+    //   limit: 75,
+    //   searchString: this.searchText,
+    //   searchType: ContentSearchType.MetadataAndFullText,
+    //   searchBehaviors: [
+    //     SearchBehavior.SimplifiedSearch,
+    //     SearchBehavior.DropInvalidCharactersOnFailure,
+    //     SearchBehavior.WildcardOnSingleTerm
+    //   ],
+    //   aggregators: this.selectedChannel.aggregations
+    //   // sort: this.activeSortingType.field === 'relevance' ? [] : [
+    //   //   new SortInfo({
+    //   //     field: this.activeSortingType.field,
+    //   //     direction: this.isAscending ? SortDirection.Asc : SortDirection.Desc
+    //   //   })
+    //   // ]
+    // });
+
+    this.searchResponseSubscription = this.contentService.search(request);
+  }
+
+  
 }

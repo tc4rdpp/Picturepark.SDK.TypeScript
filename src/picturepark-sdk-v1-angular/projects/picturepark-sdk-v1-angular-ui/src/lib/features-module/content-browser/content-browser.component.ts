@@ -99,6 +99,7 @@ export class ContentBrowserComponent extends BaseBrowserComponent<Content> imple
   }
 
   getSearchRequest(): Observable<ContentSearchResult> | undefined {
+    debugger
     if (!this.channel || !this.channel.id) { return; }
 
     const request = new ContentSearchRequest({

@@ -26,6 +26,7 @@ export class ContentAggregationListComponent extends AggregationListComponent {
   }
 
   protected fetchData(): Observable<ObjectAggregationResult | null> {
+    debugger
     if (this.channelId && this.aggregators && this.aggregators.length) {
       this.isLoading.next(true);
       const request = new ContentAggregationRequest({
@@ -43,6 +44,7 @@ export class ContentAggregationListComponent extends AggregationListComponent {
 
     return of(null);
   }
+
 
   public fetchSearchData = (searchString: string, aggregator: AggregatorBase): Observable<ObjectAggregationResult> => {
     const request = new ContentAggregationRequest({
