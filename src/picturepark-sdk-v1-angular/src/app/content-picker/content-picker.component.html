@@ -29,7 +29,7 @@
         </mat-toolbar-row>
         <mat-tab-group class="right-panel filters">
           <mat-tab label="Filters">
-            <pp-content-aggregation-list [searchString]="searchText" [channelId]="selectedChannel?.id"
+            <pp-content-aggregation-list [searchString]="searchText" [channelId]="selectedChannel?.id" [searchHandler]="searchHandler"
               [aggregators]="selectedChannel?.aggregations" (filterChange)="selectedFilter = $event">
             </pp-content-aggregation-list>
           </mat-tab>
@@ -46,8 +46,9 @@
         </div>
       </mat-sidenav>
       <mat-sidenav-content class="content">
-        <pp-content-browser #contentBrowser [channel]="selectedChannel" [filter]="selectedFilter"
+        <pp-content-browser #contentBrowser [channel]="selectedChannel"
           [searchString]="searchText" (previewItemChange)="openDetails($event)"
+          [searchHandler]="searchHandler"
           (selectedItemsChange)="selectionChange($event)">
         </pp-content-browser>
         <div class="expand-browser" *ngIf="!snav.opened && !deviceBreakpoint" (click)="snav.toggle()">

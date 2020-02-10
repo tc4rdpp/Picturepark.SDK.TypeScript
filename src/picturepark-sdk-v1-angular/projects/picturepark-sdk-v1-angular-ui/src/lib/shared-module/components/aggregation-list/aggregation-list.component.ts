@@ -1,11 +1,11 @@
 import { Input, OnChanges, Output, EventEmitter, SimpleChanges } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 // LIBRARIES
 import {
   AggregationFilter, AggregationResult, ObjectAggregationResult,
-  AggregatorBase, FilterBase, OrFilter, AndFilter
+  AggregatorBase, FilterBase, OrFilter, AndFilter, ContentSearchResult
 } from '@picturepark/sdk-v1-angular';
 
 // COMPONENTS
@@ -30,6 +30,8 @@ export abstract class AggregationListComponent extends BaseComponent implements 
   @Output()
   public aggregationFiltersChange = new EventEmitter<AggregationFilter[]>();
 
+  public filters: FilterBase | null;
+
   // Aggregation filters states connected to aggregators by index.
   private aggregationFiltersStates: Array<AggregationFilter[]> = [];
 
@@ -43,7 +45,8 @@ export abstract class AggregationListComponent extends BaseComponent implements 
       this.aggregationFiltersStates = [];
       this.aggregationFilters = [];
       this.aggregationFiltersChange.emit([]);
-      this.filterChange.emit(null);
+      this.filters = null;
+      this.filterChange.emit(this.filters);
     }
 
     if (changes['aggregators'] || changes['searchString'] || changes['aggregationFilters']) {
@@ -51,14 +54,16 @@ export abstract class AggregationListComponent extends BaseComponent implements 
     }
   }
 
-  protected abstract fetchData(): Observable<ObjectAggregationResult | null>;
+  // TODO SAN try and find another solution to this 
+  protected abstract fetchData(): any;
   protected abstract fetchSearchData(searchString: string, aggregator: AggregatorBase): Observable<ObjectAggregationResult | null>;
 
   public clearFilters(): void {
     this.aggregationFiltersStates = [];
     this.aggregationFilters = [];
     this.aggregationFiltersChange.emit([]);
-    this.filterChange.emit(null);
+    this.filters = null;
+    this.filterChange.emit(this.filters);
     this.updateData();
   }
 
@@ -70,7 +75,8 @@ export abstract class AggregationListComponent extends BaseComponent implements 
     const resultFilter = this.getFilter(this.aggregationFiltersStates);
 
     this.aggregationFiltersChange.emit(this.aggregationFilters);
-    this.filterChange.emit(resultFilter);
+    this.filters = resultFilter;
+    this.filterChange.emit(this.filters);
 
     this.updateData();
   }
@@ -82,7 +88,7 @@ export abstract class AggregationListComponent extends BaseComponent implements 
   private updateData() {
     const fetchDataSubscription = this.fetchData()
       .pipe(filter((result) => result !== null))
-      .subscribe((result: ObjectAggregationResult) => {
+      .subscribe((result) => {
         this.processAggregationResults(result.aggregationResults || []);
 
         this.isLoading.next(false);

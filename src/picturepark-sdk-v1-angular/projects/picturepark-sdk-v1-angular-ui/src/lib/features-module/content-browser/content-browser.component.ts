@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges, Injector } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, Injector, OnInit } from '@angular/core';
 
 // LIBRARIES
 import {
@@ -18,6 +18,7 @@ import { BasketService } from '../../shared-module/services/basket/basket.servic
 // INTERFACES
 import { Observable } from 'rxjs';
 import { ContentDownloadDialogService } from '../content-download-dialog/content-download-dialog.service';
+import { SearchHandler } from '../../shared-module/search-utils';
 
 // TODO: add virtual scrolling (e.g. do not create a lot of div`s, only that are presented on screen right now)
 // currently experimental feature of material CDK
@@ -34,6 +35,9 @@ export class ContentBrowserComponent extends BaseBrowserComponent<Content> imple
   @Input()
   public channel: Channel | null = null;
 
+  @Input()
+  public searchHandler: SearchHandler;
+
   constructor(
     private basketService: BasketService,
     private contentService: ContentService,
@@ -44,6 +48,13 @@ export class ContentBrowserComponent extends BaseBrowserComponent<Content> imple
   }
 
   async init(): Promise<void> {
+
+    this.searchHandler.searchResponseUpdated.subscribe((updated) => {
+      if (updated) {
+        this.update();
+      }
+    });
+
     // BASKET SUBSCRIBER
     const basketSubscription = this.basketService.basketChange.subscribe(basketItems => {
       this.items.forEach(model => model.isInBasket = basketItems.some(basketItem => basketItem === model.item.id));
@@ -99,17 +110,17 @@ export class ContentBrowserComponent extends BaseBrowserComponent<Content> imple
   }
 
   getSearchRequest(): Observable<ContentSearchResult> | undefined {
-    debugger
     if (!this.channel || !this.channel.id) { return; }
 
     const request = new ContentSearchRequest({
       debugMode: false,
       pageToken: this.nextPageToken,
       brokenDependenciesFilter: BrokenDependenciesFilter.All,
-      filter: this.filter ? this.filter : undefined,
       channelId: this.channel!.id,
       lifeCycleFilter: LifeCycleFilter.ActiveOnly,
-      limit: this.pageSize,
+      // TODO SAN use correct limit
+      // limit: this.limit;
+      limit: 76,
       searchString: this.searchString,
       searchType: ContentSearchType.MetadataAndFullText,
       searchBehaviors: [
@@ -125,7 +136,8 @@ export class ContentBrowserComponent extends BaseBrowserComponent<Content> imple
       ]
     });
 
-    return this.contentService.search(request);
+    this.searchHandler.updateSearchRequestParameters(request);
+    return this.searchHandler.searchResponseSubscription;
   }
 
   ngOnChanges(changes: SimpleChanges): void {

@@ -53,6 +53,7 @@ export { DialogService } from './lib/features-module/dialog/dialog.service';
 
 // Classes
 export { ContentModel } from './lib/shared-module/models/content-model';
+export { SearchHandler } from './lib/shared-module/search-utils';
 
 // Functions
 export * from './lib/utilities/helper';
