@@ -57,3 +57,9 @@ export { SearchHandler } from './lib/shared-module/search-utils';
 
 // Functions
 export * from './lib/utilities/helper';
+
+// Interfaces
+export { SearchParameters } from './lib/shared-module/search-utils';
+
+// Enums
+export { ExtendedSearchBehavior } from './lib/shared-module/search-utils';

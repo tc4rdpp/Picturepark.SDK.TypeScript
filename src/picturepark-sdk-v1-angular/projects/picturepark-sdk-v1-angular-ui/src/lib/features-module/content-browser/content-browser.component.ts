@@ -112,6 +112,7 @@ export class ContentBrowserComponent extends BaseBrowserComponent<Content> imple
   getSearchRequest(): Observable<ContentSearchResult> | undefined {
     if (!this.channel || !this.channel.id) { return; }
 
+
     const request = new ContentSearchRequest({
       debugMode: false,
       pageToken: this.nextPageToken,
@@ -123,11 +124,14 @@ export class ContentBrowserComponent extends BaseBrowserComponent<Content> imple
       limit: 76,
       searchString: this.searchString,
       searchType: ContentSearchType.MetadataAndFullText,
-      searchBehaviors: [
-        SearchBehavior.SimplifiedSearch,
-        SearchBehavior.DropInvalidCharactersOnFailure,
-        SearchBehavior.WildcardOnSingleTerm
-      ],
+      searchBehaviors: this.searchBehavior ? [
+          this.searchBehavior,
+          SearchBehavior.DropInvalidCharactersOnFailure,
+          SearchBehavior.WildcardOnSingleTerm,
+        ] : [
+          SearchBehavior.DropInvalidCharactersOnFailure,
+          SearchBehavior.WildcardOnSingleTerm,
+        ],
       sort: this.activeSortingType.field === 'relevance' ? [] : [
         new SortInfo({
           field: this.activeSortingType.field,
@@ -141,7 +145,7 @@ export class ContentBrowserComponent extends BaseBrowserComponent<Content> imple
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['channel'] || changes['filter'] || changes['searchString']) {
+    if (changes['channel'] || changes['filter'] || changes['searchString'] || changes['searchBehavior']) {
       this.update();
     }
   }
