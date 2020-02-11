@@ -33,6 +33,17 @@ export class ContentAggregationListComponent extends AggregationListComponent {
   protected fetchData(): Observable<ObjectAggregationResult | null> | Subject<ContentSearchResult> {
     if (this.channelId && this.aggregators && this.aggregators.length) {
       this.isLoading.next(true);
+
+      const newRequest = {
+        aggregators: this.aggregators,
+        aggregationFilters: this.aggregationFilters,
+        filter: this.filters ? this.filters : undefined,
+      };
+
+      this.searchHandler.updateAggregateRequestParameters(newRequest as IContentSearchRequest);
+
+      return this.searchHandler.searchResponseSubscription;
+
       // const request = new ContentAggregationRequest({
       //   aggregators: this.aggregators,
       //   channelId: this.channelId,
@@ -43,15 +54,6 @@ export class ContentAggregationListComponent extends AggregationListComponent {
       //   lifeCycleFilter: LifeCycleFilter.ActiveOnly
       // });
 
-      const request2 = {
-        aggregators: this.aggregators,
-        aggregationFilters: this.aggregationFilters,
-        filter: this.filters ? this.filters : undefined,
-      };
-
-      this.searchHandler.updateAggregateRequestParameters(request2 as IContentSearchRequest);
-
-      return this.searchHandler.searchResponseSubscription;
       // return this.contentService.aggregate(request);
     }
 
