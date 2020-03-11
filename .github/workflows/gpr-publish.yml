@@ -19,9 +19,13 @@ jobs:
           node-version: ${{ matrix.node-version }}
           registry-url: https://npm.pkg.github.com/
       - run: npm install
-      - run: |
-          npm config  ls -l
-          npm publish
+      - working-directory: ./src/picturepark-sdk-v1-angular
+        run: |
+          npm run init
+          npm run lint
+          npm run build-libraries
+      - working-directory: ./src/picturepark-sdk-v1-angular
+        run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       # npm config set _auth $NODE_AUTH_TOKEN
