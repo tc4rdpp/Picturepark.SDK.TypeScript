@@ -22,7 +22,7 @@ jobs:
         with:
           node-version: 12
       - run: npm install
-      - run: npm install -g @angular/cli > /dev/null
+      - run: npm install -g @angular/cli
       - run: npm test
         env:
           TestInstanceUrl: ${{ secrets.TestInstanceUrl }}
