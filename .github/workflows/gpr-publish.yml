@@ -12,24 +12,20 @@ jobs:
       matrix:
         node-version: [12.x]
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
           registry-url: https://npm.pkg.github.com/
-      - name: Create NPMRC
-        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN}}
-      - name: Publish to Github Packages
-        run: |
-          npm config set _auth $NODE_AUTH_TOKEN
+      - run: npm install
+      - run: |
           npm config  ls -l
-          npm publish "/src/picturepark-sdk-v1-angular/dist/picturepark-sdk-v1-angular"
+          npm publish
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN}}
-      #- run: git config --global core.longpaths true
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # npm config set _auth $NODE_AUTH_TOKEN
+         #- run: git config --global core.longpaths true
       #- uses: actions/checkout@v2
       #- name: Cache node modules
       #  uses: actions/cache@v1
@@ -48,9 +44,7 @@ jobs:
       #  run: echo "//npm.pkg.github.com/:_authToken=$NODE_AUTH_TOKEN" > ~/.npmrc
       #  env:
       #    NODE_AUTH_TOKEN: ${{ secrets.npm_auth_token }}
-      #- run: npm config ls -l
       #- run: npm install
-      #- run: ls -a
       #- run: npm run build
       #- run: build/08_Publish.bat
       #  env:
