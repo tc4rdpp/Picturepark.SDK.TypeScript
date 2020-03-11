@@ -16,6 +16,8 @@ jobs:
           node-version: 12
       - run: npm ci
       - run: npm test
+        env:
+          TestInstanceUrl: ${{ secrets.TestInstanceUrl }}
 
   publish-gpr:
     needs: build
