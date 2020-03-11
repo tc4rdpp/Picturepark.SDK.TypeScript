@@ -47,6 +47,11 @@ jobs:
           registry-url: https://npm.pkg.github.com/
           scope: '@tc4rdpp'
       - run: npm ci
-      - run: npm publish
+      - run: echo "//npm.pkg.github.com/:_authToken=$env:npm_auth_token`n" > "$env:UserProfile\.npmrc" -Encoding ASCII
+      #- run: build/08_Publish.bat
+      #- run: npm publish
+      #  env:
+      #    NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - run: npm publish "$0\..\src\picturepark-sdk-v1-angular\dist\picturepark-sdk-v1-angular"
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
