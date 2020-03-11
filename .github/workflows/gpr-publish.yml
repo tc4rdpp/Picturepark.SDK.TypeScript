@@ -28,7 +28,7 @@ jobs:
         run: echo "//npm.pkg.github.com/:_authToken=$NODE_AUTH_TOKEN" > ~/.npmrc
         env:
           NODE_AUTH_TOKEN: ${{ secrets.npm_auth_token }}
-      - run: npm whoami
+      - run: npm config ls -l
       - run: npm install
       - run: ls -a
       #- run: npm run build
