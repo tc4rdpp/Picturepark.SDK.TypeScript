@@ -25,8 +25,8 @@ jobs:
       - name: Angular Github Actions
         uses: mayur-rawte/github-angular-actions@latest
       - run: npm install
-      - run: npm run build
       - run: echo "//npm.pkg.github.com/:_authToken=$env:npm_auth_token" > "$env:UserProfile\.npmrc" -Encoding ASCII
+      - run: npm run build
       - run: build/08_Publish.bat
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
