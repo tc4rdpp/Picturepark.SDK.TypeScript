@@ -70,5 +70,8 @@
     "tslint": "~5.15.0",
     "typescript": "~3.7.5",
     "webpack-bundle-analyzer": "3.4.1"
+  },
+  "publishConfig": { 
+    "registry": "https://npm.pkg.github.com/" 
   }
 }
