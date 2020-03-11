@@ -25,7 +25,7 @@ jobs:
           npm run lint
           npm run build-libraries
       - working-directory: ./src/picturepark-sdk-v1-angular/dist/picturepark-sdk-v1-angular
-        run: npm publish --access=public
+        run: npm publish --access=private
         env:
           NODE_AUTH_TOKEN: ${{ secrets.npm_auth_token }}
         
