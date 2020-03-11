@@ -7,9 +7,9 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
-      - run: git config --global core.longpaths true
+      #- run: git config --global core.longpaths true
       - uses: actions/checkout@v2
       #- name: Cache node modules
       #  uses: actions/cache@v1
@@ -29,7 +29,7 @@ jobs:
         run: echo "//npm.pkg.github.com/:_authToken=$NODE_AUTH_TOKEN" > ~/.npmrc
         env:
           NODE_AUTH_TOKEN: ${{ secrets.npm_auth_token }}
-      - run: dir
+      - run: ls -a
       #- run: npm run build
       #- run: build/08_Publish.bat
       #  env:
