@@ -4,5 +4,6 @@
   "peerDependencies": {
     "@angular/common": "^9.0.0",
     "@angular/core": "^9.0.0"
-  }
+  },
+  "repository": "https://github.com/tc4rdpp/Picturepark.SDK.TypeScript"
 }
