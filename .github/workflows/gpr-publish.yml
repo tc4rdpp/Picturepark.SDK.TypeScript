@@ -8,9 +8,27 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
     steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Create NPMRC
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN}}
+      - name: Publish to Github Packages
+        run: |
+          npm config set _auth $NODE_AUTH_TOKEN
+          npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN}}
       #- run: git config --global core.longpaths true
-      - uses: actions/checkout@v2
+      #- uses: actions/checkout@v2
       #- name: Cache node modules
       #  uses: actions/cache@v1
       #  with:
@@ -18,19 +36,19 @@ jobs:
       #    key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
       #    restore-keys: |
       #      ${{ runner.os }}-node-
-      
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 12
-      - name: Angular Github Actions
-        uses: mayur-rawte/github-angular-actions@latest
-      - name: Create .npmrc
-        run: echo "//npm.pkg.github.com/:_authToken=$NODE_AUTH_TOKEN" > ~/.npmrc
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.npm_auth_token }}
-      - run: npm config ls -l
-      - run: npm install
-      - run: ls -a
+      #
+      #- uses: actions/setup-node@v1
+      #  with:
+      #    node-version: 12
+      #- name: Angular Github Actions
+      #  uses: mayur-rawte/github-angular-actions@latest
+      #- name: Create .npmrc
+      #  run: echo "//npm.pkg.github.com/:_authToken=$NODE_AUTH_TOKEN" > ~/.npmrc
+      #  env:
+      #    NODE_AUTH_TOKEN: ${{ secrets.npm_auth_token }}
+      #- run: npm config ls -l
+      #- run: npm install
+      #- run: ls -a
       #- run: npm run build
       #- run: build/08_Publish.bat
       #  env:
