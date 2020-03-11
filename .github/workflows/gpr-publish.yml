@@ -18,7 +18,13 @@ jobs:
       - run: npm test
         env:
           TestInstanceUrl: ${{ secrets.TestInstanceUrl }}
-
+          TestIdentityClientId: ${{ secrets.TestIdentityClientId }}
+          TestIdentitySecret: ${{ secrets.TestIdentitySecret }}
+          TestUsername: ${{ secrets.TestUsername }}
+          TestPassword: ${{ secrets.TestPassword }}
+          TestIdentityServer: ${{ secrets.TestIdentityServer }}
+          TestApiServer: ${{ secrets.TestApiServer }}
+          
   publish-gpr:
     needs: build
     runs-on: ubuntu-latest
