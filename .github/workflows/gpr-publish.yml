@@ -26,6 +26,10 @@ jobs:
         uses: mayur-rawte/github-angular-actions@latest
       - run: npm install
       - run: npm run build
+      - run: echo "//npm.pkg.github.com/:_authToken=$env:npm_auth_token" > "$env:UserProfile\.npmrc" -Encoding ASCII
+      - run: build/08_Publish.bat
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
       #- run: npm test
       #  env:
       #    TestInstanceUrl: ${{ secrets.TestInstanceUrl }}
@@ -48,10 +52,10 @@ jobs:
           registry-url: https://npm.pkg.github.com/
           scope: '@tc4rdpp'
       - run: npm ci
-      - run: echo "//npm.pkg.github.com/:_authToken=$env:npm_auth_token" > "$env:UserProfile\.npmrc" -Encoding ASCII
-      - run: build/08_Publish.bat
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      #- run: echo "//npm.pkg.github.com/:_authToken=$env:npm_auth_token" > "$env:UserProfile\.npmrc" -Encoding ASCII
+      #- run: build/08_Publish.bat
+      #  env:
+      #    NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
       #- run: npm publish
       #  env:
       #    NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
