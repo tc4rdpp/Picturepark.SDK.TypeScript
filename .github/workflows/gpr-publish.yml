@@ -24,6 +24,7 @@ jobs:
           node-version: 12
       - name: Angular Github Actions
         uses: mayur-rawte/github-angular-actions@latest
+      - run: npm install
       - run: npm run build
       - run: npm test
         env:
