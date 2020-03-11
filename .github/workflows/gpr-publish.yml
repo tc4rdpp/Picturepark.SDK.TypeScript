@@ -13,7 +13,6 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-      - name: Support longpaths
       - run: git config --system core.longpaths true
       - run: npm ci
       - run: npm test
