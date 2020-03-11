@@ -21,8 +21,8 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-      - run: npm ci
       - run: npm install
+      - run: npm install -g @angular/cli > /dev/null
       - run: npm test
         env:
           TestInstanceUrl: ${{ secrets.TestInstanceUrl }}
