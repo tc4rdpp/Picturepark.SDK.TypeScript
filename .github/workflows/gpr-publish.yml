@@ -38,7 +38,7 @@ jobs:
           
   publish-gpr:
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -48,10 +48,9 @@ jobs:
           scope: '@tc4rdpp'
       - run: npm ci
       - run: echo "//npm.pkg.github.com/:_authToken=$env:npm_auth_token" > "$env:UserProfile\.npmrc" -Encoding ASCII
-      #- run: build/08_Publish.bat
+      - run: build/08_Publish.bat
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
       #- run: npm publish
       #  env:
       #    NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-      - run: npm publish "$0\..\src\picturepark-sdk-v1-angular\dist\picturepark-sdk-v1-angular"
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
