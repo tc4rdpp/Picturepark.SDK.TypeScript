@@ -18,6 +18,11 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           registry-url: https://npm.pkg.github.com/
+      - name: Increase version - picturepark-sdk-v1-angular
+        working-directory: ./src/picturepark-sdk-v1-angular/projects/picturepark-sdk-v1-angular
+        run: |
+          npm version prerelease --preid=pre-${{ github.sha }}
+          npm publish
       - name: Build picturepark-sdk-v1-angular libraries
         working-directory: ./src/picturepark-sdk-v1-angular
         run: |
