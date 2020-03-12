@@ -14,6 +14,7 @@
     "build-ui": "ng build picturepark-sdk-v1-angular-ui --prod && npm run build-ui-theme",
     "build-ui-theme": "scss-bundle -c projects/picturepark-sdk-v1-angular-ui/scss-bundle.config.json",
     "build-css": "cpx \"./projects/picturepark-sdk-v1-angular-ui/src/lib/styles/*\" \"./dist/picturepark-sdk-v1-angular-ui/lib/styles/\"",
+    "build-lib-angular": "ng build picturepark-sdk-v1-angular --prod",
     "test": "ng test",
     "test-nowatch": "ng test",
     "lint": "ng lint",
