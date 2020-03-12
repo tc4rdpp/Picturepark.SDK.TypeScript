@@ -27,7 +27,7 @@ jobs:
       - name: Publish package - picturepark-sdk-v1-angular
         working-directory: ./src/picturepark-sdk-v1-angular/dist/picturepark-sdk-v1-angular
         run: |
-          npm --no-git-tag-version version prerelease --preid=pre from-git
+          npm version from-git
           npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.npm_auth_token }}
