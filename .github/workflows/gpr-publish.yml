@@ -25,8 +25,12 @@ jobs:
         working-directory: ./src/picturepark-sdk-v1-angular
         run: |
           npm run init
-          npm run lint
-          npm run build-libraries
+          ng build picturepark-sdk-v1-angular --prod
+      - name: Publish package - picturepark-sdk-v1-angular
+        working-directory: ./src/picturepark-sdk-v1-angular/dist/picturepark-sdk-v1-angular
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.npm_auth_token }}
       
         
      
@@ -60,11 +64,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
           registry-url: https://npm.pkg.github.com/
       #- run: npm ci
-      - name: Publish package - picturepark-sdk-v1-angular
-        working-directory: ./src/picturepark-sdk-v1-angular/dist/picturepark-sdk-v1-angular
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.npm_auth_token }}
+     
      
       #- run: build/08_Publish.bat
       #  env:
