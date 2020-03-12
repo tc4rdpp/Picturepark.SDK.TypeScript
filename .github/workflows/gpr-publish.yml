@@ -30,37 +30,17 @@ jobs:
           npm run build-libraries
       - name: Publish package - picturepark-sdk-v1-angular
         working-directory: ./src/picturepark-sdk-v1-angular/dist/picturepark-sdk-v1-angular
-        run: |
-          npm version from-git
-          npm publish
+        run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.npm_auth_token }}
         
-      # npm config set _auth $NODE_AUTH_TOKEN
-         #- run: git config --global core.longpaths true
-      #- uses: actions/checkout@v2
-      #- name: Cache node modules
-      #  uses: actions/cache@v1
-      #  with:
-      #    path: ~/.npm
-      #    key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-      #    restore-keys: |
-      #      ${{ runner.os }}-node-
-      #
-      #- uses: actions/setup-node@v1
-      #  with:
-      #    node-version: 12
+     
       #- name: Angular Github Actions
       #  uses: mayur-rawte/github-angular-actions@latest
-      #- name: Create .npmrc
-      #  run: echo "//npm.pkg.github.com/:_authToken=$NODE_AUTH_TOKEN" > ~/.npmrc
-      #  env:
-      #    NODE_AUTH_TOKEN: ${{ secrets.npm_auth_token }}
+      
       #- run: npm install
       #- run: npm run build
-      #- run: build/08_Publish.bat
-      #  env:
-      #    NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      
       #- run: npm test
       #  env:
       #    TestInstanceUrl: ${{ secrets.TestInstanceUrl }}
