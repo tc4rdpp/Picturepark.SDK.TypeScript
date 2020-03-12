@@ -18,42 +18,28 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           registry-url: https://npm.pkg.github.com/
-      - name: Package picturepark-sdk-v1-angular
+      - name: Increase version - picturepark-sdk-v1-angular
+        working-directory: ./src/picturepark-sdk-v1-angular/projects/picturepark-sdk-v1-angular
+        run: npm version prerelease --preid=pre-${GITHUB_SHA::7}
+      - name: Build picturepark-sdk-v1-angular libraries
         working-directory: ./src/picturepark-sdk-v1-angular
         run: |
           npm run init
-          npm run lint
-          npm run build-libraries
-      - working-directory: ./src/picturepark-sdk-v1-angular/dist/picturepark-sdk-v1-angular
-        run: npm publish --access=private
+          npm run build-lib-angular
+      - name: Publish package - picturepark-sdk-v1-angular
+        working-directory: ./src/picturepark-sdk-v1-angular/dist/picturepark-sdk-v1-angular
+        run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.npm_auth_token }}
+      
         
-      # npm config set _auth $NODE_AUTH_TOKEN
-         #- run: git config --global core.longpaths true
-      #- uses: actions/checkout@v2
-      #- name: Cache node modules
-      #  uses: actions/cache@v1
-      #  with:
-      #    path: ~/.npm
-      #    key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-      #    restore-keys: |
-      #      ${{ runner.os }}-node-
-      #
-      #- uses: actions/setup-node@v1
-      #  with:
-      #    node-version: 12
+     
       #- name: Angular Github Actions
       #  uses: mayur-rawte/github-angular-actions@latest
-      #- name: Create .npmrc
-      #  run: echo "//npm.pkg.github.com/:_authToken=$NODE_AUTH_TOKEN" > ~/.npmrc
-      #  env:
-      #    NODE_AUTH_TOKEN: ${{ secrets.npm_auth_token }}
+      
       #- run: npm install
       #- run: npm run build
-      #- run: build/08_Publish.bat
-      #  env:
-      #    NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      
       #- run: npm test
       #  env:
       #    TestInstanceUrl: ${{ secrets.TestInstanceUrl }}
@@ -64,19 +50,22 @@ jobs:
       #    TestIdentityServer: ${{ secrets.TestIdentityServer }}
       #    TestApiServer: ${{ secrets.TestApiServer }}
           
-  publish-gpr:
-    needs: build
-    runs-on: windows-latest
-    steps:
-      - run: git config --global core.longpaths true
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 12
-          registry-url: https://npm.pkg.github.com/
-          scope: '@tc4rdpp'
-      - run: npm ci
-      #- run: echo "//npm.pkg.github.com/:_authToken=$env:npm_auth_token" > "$env:UserProfile\.npmrc" -Encoding ASCII
+# publish-gpr:
+#   needs: build
+#   runs-on: ubuntu-latest
+#   strategy:
+#     matrix:
+#       node-version: [12.x]
+#   steps:
+#     - uses: actions/checkout@v2
+#     - name: Use Node.js ${{ matrix.node-version }}
+#       uses: actions/setup-node@v1
+#       with:
+#         node-version: ${{ matrix.node-version }}
+#         registry-url: https://npm.pkg.github.com/
+      #- run: npm ci
+     
+     
       #- run: build/08_Publish.bat
       #  env:
       #    NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
