@@ -25,7 +25,7 @@ jobs:
         working-directory: ./src/picturepark-sdk-v1-angular
         run: |
           npm run init
-          npm run build-prod-package-angular
+          npm run build-lib-angular
       - name: Publish package - picturepark-sdk-v1-angular
         working-directory: ./src/picturepark-sdk-v1-angular/dist/picturepark-sdk-v1-angular
         run: npm publish
@@ -50,19 +50,19 @@ jobs:
       #    TestIdentityServer: ${{ secrets.TestIdentityServer }}
       #    TestApiServer: ${{ secrets.TestApiServer }}
           
-  publish-gpr:
-    needs: build
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [12.x]
-    steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-          registry-url: https://npm.pkg.github.com/
+# publish-gpr:
+#   needs: build
+#   runs-on: ubuntu-latest
+#   strategy:
+#     matrix:
+#       node-version: [12.x]
+#   steps:
+#     - uses: actions/checkout@v2
+#     - name: Use Node.js ${{ matrix.node-version }}
+#       uses: actions/setup-node@v1
+#       with:
+#         node-version: ${{ matrix.node-version }}
+#         registry-url: https://npm.pkg.github.com/
       #- run: npm ci
      
      
