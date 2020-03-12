@@ -25,7 +25,7 @@ jobs:
         working-directory: ./src/picturepark-sdk-v1-angular
         run: |
           npm run init
-          ng build picturepark-sdk-v1-angular --prod
+          npm run build-prod-package-angular
       - name: Publish package - picturepark-sdk-v1-angular
         working-directory: ./src/picturepark-sdk-v1-angular/dist/picturepark-sdk-v1-angular
         run: npm publish
