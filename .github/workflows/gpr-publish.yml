@@ -32,7 +32,8 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.npm_auth_token }}
       
-        
+      #TODO: install generated angular package in angular ui project  
+        - 
      
       #- name: Angular Github Actions
       #  uses: mayur-rawte/github-angular-actions@latest
