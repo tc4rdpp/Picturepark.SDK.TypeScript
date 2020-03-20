@@ -96,13 +96,10 @@ jobs:
       
       - name: Increase version
         working-directory: ./src/picturepark-sdk-v1-pickers
-        run: npm version prerelease --preid=pre-$SHA
-        env:
-          SHA: ${{ github.sha }}
+        run: npm version prerelease --preid=pre-$GITHUB_SHA
         
       - name: Build pickers
         run: |
-          cmd /c "set"
           npm install
           npm run build:pickers
           
