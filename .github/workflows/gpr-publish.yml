@@ -55,7 +55,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.npm_auth_token }}
      
   picturepark-sdk-v1-fetch:
-    runs-on: [windows-2016]
+    runs-on: [windows-latest]
     strategy:
       matrix:
         node-version: [12.x]
@@ -74,6 +74,7 @@ jobs:
       
       - name: Build fetch
         run: |
+          echo ${GITHUB_SHA}
           npm install
           npm run build:fetch
           
@@ -84,7 +85,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.npm_auth_token }}
           
   picturepark-sdk-v1-pickers:
-    runs-on: [windows-2019]
+    runs-on: [windows-latest]
     strategy:
       matrix:
         node-version: [12.x]
@@ -99,7 +100,7 @@ jobs:
       
       - name: Increase version
         working-directory: ./src/picturepark-sdk-v1-pickers
-        run: npm version prerelease --preid=pre-${GITHUB_SHA}
+        run: npm version prerelease --preid=pre-${GITHUB_SHA::7}
         
       - name: Build pickers
         run: |
