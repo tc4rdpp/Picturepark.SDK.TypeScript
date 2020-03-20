@@ -102,6 +102,7 @@ jobs:
         
       - name: Build pickers
         run: |
+          cmd /c "set"
           npm install
           npm run build:pickers
           
