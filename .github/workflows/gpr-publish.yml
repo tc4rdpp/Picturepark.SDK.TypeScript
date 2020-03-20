@@ -7,7 +7,7 @@ on:
 
 jobs:
   picturepark-sdk-v1-angular:
-    runs-on: ubuntu-latest
+    runs-on: [ubuntu-latest]
     strategy:
       matrix:
         node-version: [12.x]
@@ -55,7 +55,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.npm_auth_token }}
      
   picturepark-sdk-v1-fetch:
-    runs-on: windows-latest
+    runs-on: [windows]
     strategy:
       matrix:
         node-version: [12.x]
@@ -84,7 +84,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.npm_auth_token }}
           
   picturepark-sdk-v1-pickers:
-    runs-on: windows-latest
+    runs-on: [windows]
     strategy:
       matrix:
         node-version: [12.x]
