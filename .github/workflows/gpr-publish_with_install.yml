@@ -1,9 +1,9 @@
 name: Picturepark Github Package publish
 
-on:
-  push:
-    branches:
-      - master
+#on:
+#  push:
+#    branches:
+#      - master
 
 jobs:
   picturepark-sdk-v1-angular:
