@@ -33,33 +33,13 @@ jobs:
         working-directory: ./src/picturepark-sdk-v1-angular
         run: |
           npm run init
-          npm run build-lib-angular
+          npm run build-libraries
       
       - name: Publish package - picturepark-sdk-v1-angular
         working-directory: ./src/picturepark-sdk-v1-angular/dist/picturepark-sdk-v1-angular
         run: npm publish --tag pre
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.npm_auth_token }}
-      
-      
-      - name: Install picturepark-sdk-v1-angular latest package to picturepark-sdk-v1-angular-oidc
-        working-directory: ./src/picturepark-sdk-v1-angular/projects/picturepark-sdk-v1-angular-oidc
-        run: npm install @tc4rdpp/sdk-v1-angular@pre
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.npm_auth_token }}  
-      - name: Install picturepark-sdk-v1-angular latest package to picturepark-sdk-v1-angular-ui
-        working-directory: ./src/picturepark-sdk-v1-angular/projects/picturepark-sdk-v1-angular-ui
-        run: npm install @tc4rdpp/sdk-v1-angular@pre
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.npm_auth_token }}
-          
-          
-      - name: Build picturepark-sdk-v1-angular libraries
-        working-directory: ./src/picturepark-sdk-v1-angular
-        run: |
-          npm run init
-          npm run build-libraries
-      
+          NODE_AUTH_TOKEN: ${{ secrets.npm_auth_token }     
       - name: Publish package - picturepark-sdk-v1-angular-oidc
         working-directory: ./src/picturepark-sdk-v1-angular/dist/picturepark-sdk-v1-angular-oidc
         run: npm publish --tag pre
