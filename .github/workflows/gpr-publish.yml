@@ -70,27 +70,7 @@ jobs:
         run: npm publish --tag pre
         env:
           NODE_AUTH_TOKEN: ${{ secrets.npm_auth_token }}
-      
-    
-      #TODO: install generated angular package in angular ui project  
-        
      
-      #- name: Angular Github Actions
-      #  uses: mayur-rawte/github-angular-actions@latest
-      
-      #- run: npm install
-      #- run: npm run build
-      
-      #- run: npm test
-      #  env:
-      #    TestInstanceUrl: ${{ secrets.TestInstanceUrl }}
-      #    TestIdentityClientId: ${{ secrets.TestIdentityClientId }}
-      #    TestIdentitySecret: ${{ secrets.TestIdentitySecret }}
-      #    TestUsername: ${{ secrets.TestUsername }}
-      #    TestPassword: ${{ secrets.TestPassword }}
-      #    TestIdentityServer: ${{ secrets.TestIdentityServer }}
-      #    TestApiServer: ${{ secrets.TestApiServer }}
-      
   picturepark-sdk-v1-fetch:
     #needs: build
     runs-on: windows-latest
@@ -98,6 +78,7 @@ jobs:
       matrix:
         node-version: [12.x]
     steps:
+      - run: git config --global core.longpaths true
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
@@ -127,6 +108,7 @@ jobs:
       matrix:
         node-version: [12.x]
     steps:
+      - run: git config --global core.longpaths true
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
