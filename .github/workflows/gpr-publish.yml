@@ -74,7 +74,7 @@ jobs:
       
       - name: Build fetch
         run: |
-          echo ${GITHUB_SHA}
+          echo HELLO ${GITHUB_SHA}
           npm install
           npm run build:fetch
           
