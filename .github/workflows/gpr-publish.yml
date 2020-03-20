@@ -19,17 +19,17 @@ jobs:
           node-version: ${{ matrix.node-version }}
           registry-url: https://npm.pkg.github.com/
       
-      - name: Increase version - picturepark-sdk-v1-angular
-        working-directory: ./src/picturepark-sdk-v1-angular/projects/picturepark-sdk-v1-angular
+      - name: Increase version
+        working-directory: ./src/picturepark-sdk-v1-angular
         run: npm version prerelease --preid=pre-${GITHUB_SHA::7}
-      - name: Increase version - picturepark-sdk-v1-angular-oidc
-        working-directory: ./src/picturepark-sdk-v1-angular/projects/picturepark-sdk-v1-angular-oidc
+      - working-directory: ./src/picturepark-sdk-v1-angular/projects/picturepark-sdk-v1-angular
         run: npm version prerelease --preid=pre-${GITHUB_SHA::7}
-      - name: Increase version - picturepark-sdk-v1-angular-ui
-        working-directory: ./src/picturepark-sdk-v1-angular/projects/picturepark-sdk-v1-angular-ui
+      - working-directory: ./src/picturepark-sdk-v1-angular/projects/picturepark-sdk-v1-angular-oidc
+        run: npm version prerelease --preid=pre-${GITHUB_SHA::7}
+      - working-directory: ./src/picturepark-sdk-v1-angular/projects/picturepark-sdk-v1-angular-ui
         run: npm version prerelease --preid=pre-${GITHUB_SHA::7}
       
-      - name: Build picturepark-sdk-v1-angular libraries
+      - name: Build libraries
         working-directory: ./src/picturepark-sdk-v1-angular
         run: |
           npm run init
@@ -65,11 +65,11 @@ jobs:
           node-version: ${{ matrix.node-version }}
           registry-url: https://npm.pkg.github.com/
       
-      - name: Increase version - picturepark-sdk-v1-fetch
+      - name: Increase version
         working-directory: ./src/picturepark-sdk-v1-fetch
         run: npm version prerelease --preid=pre-${GITHUB_SHA::7}
       
-      - name: Build picturepark-sdk-v1-fetch
+      - name: Build fetch
         run: |
           npm install
           npm run build:fetch
@@ -94,11 +94,11 @@ jobs:
           node-version: ${{ matrix.node-version }}
           registry-url: https://npm.pkg.github.com/
       
-      - name: Increase version - picturepark-sdk-v1-pickers
+      - name: Increase version
         working-directory: ./src/picturepark-sdk-v1-pickers
         run: npm version prerelease --preid=pre-${GITHUB_SHA::7}
       
-      - name: Build picturepark-sdk-v1-pickers
+      - name: Build pickers
         run: |
           npm install
           npm run build:pickers
