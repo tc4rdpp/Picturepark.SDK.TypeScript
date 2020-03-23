@@ -18,6 +18,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           registry-url: https://npm.pkg.github.com/
+          scope: '@tc4rdpp'
       
       - name: Increase version picturepark-sdk-v1-angular
         working-directory: ./src/picturepark-sdk-v1-angular
