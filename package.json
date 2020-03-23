@@ -26,6 +26,5 @@
   },
   "dependencies": {
     "ts-md5": "^1.2.4"
-  },
-  "repository": "https://github.com/tc4rdpp/Picturepark.SDK.TypeScript"
+  }
 }
