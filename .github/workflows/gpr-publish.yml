@@ -47,7 +47,7 @@ jobs:
       - name: Publish package - picturepark-sdk-v1-angular-oidc
         working-directory: ./src/picturepark-sdk-v1-angular/dist/picturepark-sdk-v1-angular-oidc
         run: |
-          echo registry=https://npm.pkg.github.com/tc4rdpp >> .npmrc
+          echo registry=https://npm.pkg.github.com/@tc4rdpp >> .npmrc
           npm publish --tag pre
         env:
           NODE_AUTH_TOKEN: ${{ secrets.npm_auth_token }}
