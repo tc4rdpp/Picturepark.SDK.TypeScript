@@ -68,14 +68,25 @@ jobs:
           npm publish --tag pre
         env:
           NODE_AUTH_TOKEN: ${{ secrets.npm_auth_token }}
-          
-          
+  
+  delete-packages:
+    runs-on: [ubuntu-latest]
+    needs: [picturepark-sdk-v1-angular]
+    strategy:
+      matrix:
+        node-version: [12.x]
+    steps:
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+          registry-url: https://npm.pkg.github.com/
       - name: Delete picturepark-sdk-v1-angular
         uses: actions/delete-package-versions@v1
         with:
           package-name: '@picturepark/sdk-v1-angular'
           num-old-versions-to-delete: 10
-  
+      
   # TODO: Solve the empty GITHUB_SHA issue
   #picturepark-sdk-v1-fetch:
   #  runs-on: [windows-latest]
