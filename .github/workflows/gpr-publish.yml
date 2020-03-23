@@ -18,7 +18,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           registry-url: https://npm.pkg.github.com/
-          scope: '@tc4rdpp'
+          scope: "@tc4rdpp"
       
       - name: Increase version picturepark-sdk-v1-angular
         working-directory: ./src/picturepark-sdk-v1-angular
@@ -38,7 +38,8 @@ jobs:
         run: |
           npm run init
           npm run build-libraries
-      
+          echo registry=https://npm.pkg.github.com/tc4rdpp >> .npmrc
+                
       - name: Publish package - picturepark-sdk-v1-angular
         working-directory: ./src/picturepark-sdk-v1-angular/dist/picturepark-sdk-v1-angular
         run: npm publish --tag pre
@@ -46,14 +47,14 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.npm_auth_token }}     
       - name: Publish package - picturepark-sdk-v1-angular-oidc
         working-directory: ./src/picturepark-sdk-v1-angular/dist/picturepark-sdk-v1-angular-oidc
-        run: |
-          echo registry=https://npm.pkg.github.com/@tc4rdpp >> .npmrc
-          npm publish --tag pre
+        run: npm publish --tag pre
         env:
           NODE_AUTH_TOKEN: ${{ secrets.npm_auth_token }}
       - name: Publish package - picturepark-sdk-v1-angular-ui
         working-directory: ./src/picturepark-sdk-v1-angular/dist/picturepark-sdk-v1-angular-ui
-        run: npm publish --tag pre
+        run: |
+          echo registry=https://npm.pkg.github.com/tc4rdpp >> .npmrc
+          npm publish --tag pre
         env:
           NODE_AUTH_TOKEN: ${{ secrets.npm_auth_token }}
   
