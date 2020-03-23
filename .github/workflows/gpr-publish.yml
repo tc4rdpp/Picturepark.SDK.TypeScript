@@ -33,7 +33,7 @@ jobs:
         working-directory: ./src/picturepark-sdk-v1-angular/projects/picturepark-sdk-v1-angular-ui
         run: npm version prerelease --preid=pre-${GITHUB_SHA::7}
       
-      - #name: Build libraries
+      #- name: Build libraries
         #working-directory: ./src/picturepark-sdk-v1-angular
         #run: |
         #  npm run init
