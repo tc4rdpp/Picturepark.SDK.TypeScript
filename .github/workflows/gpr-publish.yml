@@ -54,7 +54,7 @@ jobs:
         working-directory: ./src/picturepark-sdk-v1-angular/dist/picturepark-sdk-v1-angular-ui
         run: |
           echo registry=https://npm.pkg.github.com/tc4rdpp >> .npmrc
-          jq -s add package.json '"repository": {"url": "git://github.com/tc4rdpp/Picturepark.SDK.TypeScript.git"}'
+          jq '"repository": {"url": "git://github.com/tc4rdpp/Picturepark.SDK.TypeScript.git"}' package.json
           cat package.json
           npm publish --tag pre
         env:
