@@ -41,30 +41,27 @@ jobs:
       - name: Publish package - picturepark-sdk-v1-angular
         working-directory: ./src/picturepark-sdk-v1-angular/dist/picturepark-sdk-v1-angular
         run: |
-          cp package.json package.json.tmp &&
-          jq '.repository.url = "git://github.com/tc4rdpp/Picturepark.SDK.TypeScript.git"' package.json.tmp >package.json &&
+          cp package.json package.json.tmp
+          jq '.repository.url = "git://github.com/tc4rdpp/Picturepark.SDK.TypeScript.git"' package.json.tmp >package.json
           rm package.json.tmp
-          cat package.json
           npm publish --tag pre
         env:
           NODE_AUTH_TOKEN: ${{ secrets.npm_auth_token }}     
       - name: Publish package - picturepark-sdk-v1-angular-oidc
         working-directory: ./src/picturepark-sdk-v1-angular/dist/picturepark-sdk-v1-angular-oidc
         run: |
-          cp package.json package.json.tmp &&
-          jq '.repository.url = "git://github.com/tc4rdpp/Picturepark.SDK.TypeScript.git"' package.json.tmp >package.json &&
+          cp package.json package.json.tmp
+          jq '.repository.url = "git://github.com/tc4rdpp/Picturepark.SDK.TypeScript.git"' package.json.tmp >package.json
           rm package.json.tmp
-          cat package.json
           npm publish --tag pre
         env:
           NODE_AUTH_TOKEN: ${{ secrets.npm_auth_token }}
       - name: Publish package - picturepark-sdk-v1-angular-ui
         working-directory: ./src/picturepark-sdk-v1-angular/dist/picturepark-sdk-v1-angular-ui
         run: |
-          cp package.json package.json.tmp &&
-          jq '.repository.url = "git://github.com/tc4rdpp/Picturepark.SDK.TypeScript.git"' package.json.tmp >package.json &&
+          cp package.json package.json.tmp
+          jq '.repository.url = "git://github.com/tc4rdpp/Picturepark.SDK.TypeScript.git"' package.json.tmp >package.json
           rm package.json.tmp
-          cat package.json
           npm publish --tag pre
         env:
           NODE_AUTH_TOKEN: ${{ secrets.npm_auth_token }}
