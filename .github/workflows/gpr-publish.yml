@@ -31,7 +31,10 @@ jobs:
         run: npm version prerelease --preid=pre-${GITHUB_SHA::7}
       - name: Increase version projects/picturepark-sdk-v1-angular-ui
         working-directory: ./src/picturepark-sdk-v1-angular/projects/picturepark-sdk-v1-angular-ui
-        run: npm version prerelease --preid=pre-${GITHUB_SHA::7}
+        run: |
+          jq '"repository"={"url"="git://github.com/tc4rdpp/Picturepark.SDK.TypeScript.git"}' package.json
+          cat package.json
+          npm version prerelease --preid=pre-${GITHUB_SHA::7}
       
       #- name: Build libraries
         #working-directory: ./src/picturepark-sdk-v1-angular
