@@ -54,6 +54,8 @@ jobs:
         working-directory: ./src/picturepark-sdk-v1-angular/dist/picturepark-sdk-v1-angular-ui
         run: |
           echo registry=https://npm.pkg.github.com/tc4rdpp >> .npmrc
+          sed -i '$s/}/,\n"repository": {"url": "git://github.com/tc4rdpp/Picturepark.SDK.TypeScript.git"}\n}/' package.json
+          cat package.json
           npm publish --tag pre
         env:
           NODE_AUTH_TOKEN: ${{ secrets.npm_auth_token }}
