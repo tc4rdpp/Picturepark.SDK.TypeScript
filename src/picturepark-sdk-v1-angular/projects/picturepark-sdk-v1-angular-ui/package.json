@@ -17,8 +17,5 @@
   "sideEffects": true,
   "repository": {
     "url": "git://github.com/tc4rdpp/Picturepark.SDK.TypeScript.git"
-  },
-  "publishConfig": { 
-    "registry": "https://npm.pkg.github.com/@tc4rdpp" 
   }
 }
