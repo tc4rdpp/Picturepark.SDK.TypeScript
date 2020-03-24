@@ -69,55 +69,60 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.npm_auth_token }}
   
-  delete-packages:
-    runs-on: [ubuntu-latest]
-    needs: [picturepark-sdk-v1-angular]
-    strategy:
-      matrix:
-        node-version: [12.x]
-    steps:
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-          registry-url: https://npm.pkg.github.com/
-      - name: Delete picturepark-sdk-v1-angular
-        uses: actions/delete-package-versions@v1
-        with:
-          package-name: '@picturepark/sdk-v1-angular'
-          num-old-versions-to-delete: 10
-      
-  # TODO: Solve the empty GITHUB_SHA issue
-  #picturepark-sdk-v1-fetch:
-  #  runs-on: [windows-latest]
+  #delete-packages:
+  #  runs-on: [ubuntu-latest]
+  #  needs: [picturepark-sdk-v1-angular]
   #  strategy:
   #    matrix:
   #      node-version: [12.x]
   #  steps:
-  #    - run: git config --global core.longpaths true
-  #    - uses: actions/checkout@v2
   #    - name: Use Node.js ${{ matrix.node-version }}
   #      uses: actions/setup-node@v1
   #      with:
   #        node-version: ${{ matrix.node-version }}
   #        registry-url: https://npm.pkg.github.com/
-  #    
-  #    - name: Increase version
-  #      working-directory: ./src/picturepark-sdk-v1-fetch
-  #      run: npm version prerelease --preid=pre-${GITHUB_SHA::7}
-  #    
-  #    - name: Build fetch
-  #      run: |
-  #        echo HELLO ${GITHUB_SHA}
-  #        npm install
-  #        npm run build:fetch
-  #        
-  #    - name: Publish package - picturepark-sdk-v1-fetch
-  #      working-directory: ./src/picturepark-sdk-v1-fetch
-  #      run: npm publish --tag pre
-  #      env:
-  #        NODE_AUTH_TOKEN: ${{ secrets.npm_auth_token }}
-  #        
+  #    - name: Delete picturepark-sdk-v1-angular
+  #      uses: actions/delete-package-versions@v1
+  #      with:
+  #        package-name: '@picturepark/sdk-v1-angular'
+  #        num-old-versions-to-delete: 10
+      
+  # TODO: Solve the empty GITHUB_SHA issue
+  picturepark-sdk-v1-fetch:
+    runs-on: [windows-latest]
+    strategy:
+      matrix:
+        node-version: [12.x]
+    steps:
+      - run: git config --global core.longpaths true
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+          registry-url: https://npm.pkg.github.com/
+      
+      - name: Increase version
+        working-directory: ./src/picturepark-sdk-v1-fetch
+        run: npm version prerelease --preid=pre-${GITHUB_SHA::7}
+        shell: bash
+        
+      - name: Build fetch
+        run: |
+          npm install
+          npm run build:fetch
+          
+      - name: Publish package - picturepark-sdk-v1-fetch
+        working-directory: ./src/picturepark-sdk-v1-fetch
+        run: |
+          cp package.json package.json.tmp
+          jq '.repository.url = "git://github.com/tc4rdpp/Picturepark.SDK.TypeScript.git"' package.json.tmp >package.json
+          rm package.json.tmp
+          cat package.json
+          npm publish --tag pre
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.npm_auth_token }}
+          
   #picturepark-sdk-v1-pickers:
   #  runs-on: [windows-latest]
   #  strategy:
